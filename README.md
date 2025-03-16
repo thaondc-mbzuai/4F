@@ -6,7 +6,6 @@ pip install -r requirements.txt
 ```
 
 ## Download
-You also can download the model in python script:
 ```python
 from huggingface_hub import hf_hub_download
 hf_hub_download(repo_id="InstantX/InstantID", filename="ControlNetModel/config.json", local_dir="./checkpoints")
