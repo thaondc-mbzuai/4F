@@ -512,7 +512,6 @@ class UniPortraitPipeline:
         pil_init_img = pil_init_img.resize((h,w), Image.BILINEAR)
         init_img = toTensor(pil_init_img).unsqueeze(0).to(self.device, dtype=self.torch_dtype).requires_grad_(False)
 
-
         pil_mask_image = pil_mask_image.resize((h,w), Image.BILINEAR)
         pil_mask_image = (np.array(pil_mask_image)>0).astype(np.uint8)*255
         pil_mask_image = Image.fromarray(pil_mask_image)
@@ -523,21 +522,12 @@ class UniPortraitPipeline:
         kps_img = kps_img.resize((h,w), Image.BILINEAR)
         kps_img = toTensor(kps_img).unsqueeze(0).to(self.device, dtype=self.torch_dtype).requires_grad_(False)
 
-
-
         lineart_processor = LineartDetector.from_pretrained("lllyasviel/Annotators")
         lineart_img = lineart_processor(input_image = pil_init_img.resize((512,512), Image.BILINEAR))
         lineart_img = lineart_img.resize((h,w), Image.BILINEAR)
 
-        canny = cv2.Canny(np.array(pil_init_img), 50, 200)
-        canny = canny[:, :, None]
-        canny = np.concatenate([canny, canny, canny], axis=2)
-        canny = Image.fromarray(canny)
-        canny.save('./output/canny.jpg')
-
         if mask_image.shape[1] > 1:
             mask_image = (mask_image.mean(dim=1, keepdim=True) > 0).to(self.device, dtype=self.torch_dtype)
-
 
         images, _, _  = self.pipe( 
                 prompt_embeds=prompt_embeds,
