@@ -1,9 +1,12 @@
 This repository is the draft code for the project: Free-finetuning face-swapping framework.
 
 ## Introduction <a name="introduction"></a>
-
-
-<p align="center"> <br> <img src="data/architecture.png" alt="Architecture Glance"/> <br> </p>
+A recent focus has emerged on pre-trained diffusion models on face-swapping task because of their superior generative capabilities. However, training these models is resource-intensive, and the results have not yet achieved satisfactory performance levels. That is, training a Text-to-Image (T2I) model requires a massive dataset with high computational resources. Meanwhile, fine-tuning these models can lead to catastrophic forgetting due to not having enough training epochs or the volume of datasets. To overcome this disadvantage, I introduce an efficient and free-tuning pipeline designed for high-precision and high-fidelity face editing based on pre-trained T2I models
+<p align="center">
+  <br>
+  <img src="data/architecture.png" alt="Architecture Glance" width="80%"/>
+  <br>
+</p>
 
 ## Requirements
 ```python
