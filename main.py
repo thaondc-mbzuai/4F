@@ -543,15 +543,14 @@ class UniPortraitPipeline:
                 prompt_embeds=prompt_embeds,
                 negative_prompt_embeds=negative_prompt_embeds,
                 guidance_scale=4.5,
-                num_inference_steps=int(math.ceil(20 / 0.9)),
+                num_inference_steps=int(math.ceil(num_inference_steps / mask_strength)),
                 generator=generator,
                 latents=None,
                 ctrl_prompt_embeds = ctrl_prompt_embeds
-
-                control_image= [kps_img, lineart_img], #[]
-                image= init_img, #, #,
-                mask_image =  mask_image,#.to(self.device, dtype=self.torch_dtype),
-                strength=0.9,
+                control_image= [kps_img, lineart_img],
+                image= init_img
+                mask_image =  mask_image,
+                strength=mask_strength,
                 controlnet_conditioning_scale=[1,1],
                 return_dict = False, 
                 )
