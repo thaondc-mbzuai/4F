@@ -1,4 +1,4 @@
-This reposipoty is for project: Free-finetuning face-swapping framework.
+This repository is the draft for the project: Free-finetuning face-swapping framework.
 
 ## Requirements
 ```python
@@ -27,3 +27,6 @@ hf_hub_download(repo_id="georgefen/Face-Landmark-ControlNet", filename="models_f
 ```python
 python main.py --FFHQ #use --celebA for CelebMaskA dataset
 ```
+## **Acknowledgements**
+
+This code is built on some excellent repos, including [diffusers](https://github.com/huggingface/diffusers), [IP-Adapter](https://github.com/tencent-ailab/IP-Adapter) and [StyleAligned](https://github.com/google/style-aligned), [UniPortrait](https://github.com/junjiehe96/UniPortrait)
