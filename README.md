@@ -1,4 +1,4 @@
-This repository is the draft code for the project: **4F: Free-finetuning face-swapping framework**
+This repository is the draft code for the project: **4F: Free-finetuning face-swapping framework**, under preparation for BMVC 2025.
 
 ## Introduction <a name="introduction"></a>
 A recent focus has emerged on pre-trained diffusion models on face-swapping task because of their superior generative capabilities. However, training these models is resource-intensive, and the results have not yet achieved satisfactory performance levels. That is, training a Text-to-Image (T2I) model requires a massive dataset with high computational resources. Meanwhile, fine-tuning these models can lead to catastrophic forgetting due to not having enough training epochs or the volume of datasets. To overcome this disadvantage, I introduce an efficient and free-tuning pipeline designed for high-precision and high-fidelity face editing based on pre-trained T2I models.
