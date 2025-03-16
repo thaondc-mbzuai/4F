@@ -1,4 +1,9 @@
-This repository is the draft for the project: Free-finetuning face-swapping framework.
+This repository is the draft code for the project: Free-finetuning face-swapping framework.
+
+## Introduction <a name="introduction"></a>
+
+
+<p align="center"> <br> <img src="data/architecture.png" alt="Architecture Glance"/> <br> </p>
 
 ## Requirements
 ```python
