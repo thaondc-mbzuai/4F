@@ -574,11 +574,11 @@ if __name__ == "__main__":
     dlib_detector = dlib.get_frontal_face_detector()
     dlib_predictor = dlib.shape_predictor("./models/shape_predictor_68_face_landmarks.dat")
     uniportrait_pipeline = UniPortraitPipeline(
-        image_encoder_path = parser.image_encoder_path,
-        ip_ckpt = parser.ip_ckpt,
-        uniportrait_faceid_ckpt = parser.uniportrait_faceid_ckpt,
-        uniportrait_router_ckpt = parser.uniportrait_router_ckpt,
-        face_backbone_ckpt = parser.face_backbone_ckpt,)
+        image_encoder_path = args.image_encoder_path,
+        ip_ckpt = args.ip_ckpt,
+        uniportrait_faceid_ckpt = args.uniportrait_faceid_ckpt,
+        uniportrait_router_ckpt = args.uniportrait_router_ckpt,
+        face_backbone_ckpt = args.face_backbone_ckpt,)
 
     if args.FFHQ:
         root = f'{root}/FFHQ/'
