@@ -29,14 +29,13 @@ import numpy as np
 import dlib
 import cv2
 from tqdm import tqdm
-from diffusers.utils import load_image
-from diffusers.models import ControlNetModel
 from diffusers import LCMScheduler
 import cv2
 import torch
 import numpy as np
 from PIL import Image
 import pandas as pd
+import argparse
 
 
 def resize_img(input_image, max_side=1280, min_side=1024, size=None,
@@ -559,14 +558,38 @@ class UniPortraitPipeline:
         return images
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Simple example of a training script.")
+    parser.add_argument("--FFHQ", action="store_true", help="Use FFHO dataset")
+    parser.add_argument("--celebA", action="store_true", help="Use celebA dataset")
+    parser.add_argument("--root", type=str, default="./UniPortrait/data/", help="Path to dataset")
+    parser.add_argument("--image_encoder_path", type=str, default="models/IP-Adapter/models/image_encoder", help="Path to CLIP encoder checkpoint")
+    parser.add_argument("--ip_ckpt", type=str, default="models/IP-Adapter/models/ip-adapter_sd15.bin", help="Path to IP adapter encoder checkpoint")
+    parser.add_argument("--uniportrait_router_ckpt", type=str, default="models/uniportrait-router_sd15.bin", help="Path to face router checkpoint")
+    parser.add_argument("--uniportrait_faceid_ckpt", type=str, default="models/uniportrait-faceid_sd15.bin", help="Path to ID adapter checkpoint")
+    parser.add_argument("--face_backbone_ckpt", type=str, default="models/glint360k_curricular_face_r101_backbone.bin", help="Path to face regconition checkpoint")
+    args = parser.parse_args()
+
+
     global dlib_detector, dlib_predictor
     dlib_detector = dlib.get_frontal_face_detector()
     dlib_predictor = dlib.shape_predictor("./models/shape_predictor_68_face_landmarks.dat")
-    uniportrait_pipeline = UniPortraitPipeline()
-    root = '/data3/rusiru.thushara/makeup/UniPortrait/data/FFHQ/'
+    uniportrait_pipeline = UniPortraitPipeline(
+        image_encoder_path = parser.image_encoder_path,
+        ip_ckpt = parser.ip_ckpt,
+        uniportrait_faceid_ckpt = parser.uniportrait_faceid_ckpt,
+        uniportrait_router_ckpt = parser.uniportrait_router_ckpt,
+        face_backbone_ckpt = parser.face_backbone_ckpt,)
+
+    if args.FFHQ:
+        root = f'{root}/FFHQ/'
+    elif:
+        root = f'{root}/CelebA/'
+    else:
+        raise Exception("Forget to set select dataset")
 
     df = pd.read_csv(f'{root}/inference.csv')
     outputs = []
+
     for source, target in tqdm(zip(df['Source'],df['Target'])):
         id_img = load_image(f'{root}/Source/{source}').resize((512,512), Image.Resampling.BILINEAR)
         mask_S = load_image(f'{root}/mask_S/{source}').resize((512,512), Image.Resampling.BILINEAR)
@@ -580,4 +603,4 @@ if __name__ == "__main__":
         init_img = load_image(f'{root}/Target/{target}').resize((512,512), Image.Resampling.BILINEAR)
         
         output = uniportrait_pipeline.generate(pil_faceid_image =id_img, pil_mask_image = mask, pil_mask_image_wo_teeth= None, pil_init_img = init_img, pil_ip_image = None, num_inference_steps =25)# pil_faceid_mix_image_1=mk_img, mix_scale_1=0.5,
-        output[0].save(f'{root}/{target}')
+        output[0].save(f'{root}/Output/{target}')
