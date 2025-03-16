@@ -25,5 +25,5 @@ hf_hub_download(repo_id="georgefen/Face-Landmark-ControlNet", filename="models_f
 ```
 ## Inference
 ```python
-python main.py
+python main.py --FFHQ #use --celebA for CelebMaskA dataset
 ```
