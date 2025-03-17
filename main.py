@@ -353,7 +353,7 @@ class UniPortraitPipeline:
 
     @torch.inference_mode()
     def get_ip_embeds(self, pil_ip_image):
-        ip_image = self.clip_image_processor(images=pil_ip_image, return_tensors="pt", do_rescale=False).pixel_values
+        ip_image = self.clip_image_processor(images=pil_ip_image, return_tensors="pt", do_rescale=True).pixel_values
         ip_image = ip_image.to(self.device, dtype=self.torch_dtype)  # (b, 3, 224, 224), values being normalized
         ip_embeds = self.clip_image_encoder(ip_image).image_embeds
         ip_prompt_embeds = self.image_proj_model(ip_embeds)
@@ -362,7 +362,7 @@ class UniPortraitPipeline:
 
     @torch.inference_mode()
     def get_single_faceid_embeds(self, pil_face_images, face_structure_scale):
-        face_clip_image = self.clip_image_processor(images=pil_face_images, return_tensors="pt", do_rescale=False).pixel_values
+        face_clip_image = self.clip_image_processor(images=pil_face_images, return_tensors="pt", do_rescale=True).pixel_values
         face_clip_image = face_clip_image.to(self.device, dtype=self.torch_dtype)  # (b, 3, 224, 224)
         face_clip_embeds = self.clip_image_encoder(
             face_clip_image, output_hidden_states=True).hidden_states[-2][:, 1:]  # b, 256, 1280
